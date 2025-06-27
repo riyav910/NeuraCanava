@@ -16,8 +16,10 @@ const Sketch2Paint = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = 500;
-    canvas.height = 500;
+    // canvas.width = 500;
+    // canvas.height = 500;
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -83,7 +85,7 @@ const Sketch2Paint = () => {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/generate", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,18 +112,23 @@ const Sketch2Paint = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-br from-pink-200 to-blue-200 px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
-        🎨 Sketch to Paint
-      </h1>
+    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen bg-gradient-to-br from-green-200 to-blue-200 p-4">
+      <div className="flex items-center mb-4">
+        <span className="text-5xl">🎨</span>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
+        Sketch to Paint
+        </h1>
+      </div>
       {/* Layout: Sketch & Output */}
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-6xl justify-center">
         {/* Sketch Area */}
         <div className="flex flex-col items-center space-y-4">
-          <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
-            🖌️ Your Sketch
-          </h2>
-
+          <div className="flex items-center">
+            <span className="text-xl">🖌️</span>
+            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
+              Your Sketch
+            </h2>
+          </div>
           <div className="border shadow rounded bg-white">
             <canvas
               ref={canvasRef}
@@ -138,13 +145,13 @@ const Sketch2Paint = () => {
               onClick={setDrawMode}
               className={`px-5 py-2 rounded-2xl font-medium text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:brightness-110 shadow-md hover:shadow-lg transition-all duration-300`}
             >
-              Draw
+              ✏️Draw
             </button>
             <button
               onClick={setEraseMode}
               className={`px-5 py-2 rounded-2xl font-medium text-red-600 border border-red-300 hover:bg-red-50 hover:text-red-700 transition-all duration-300`}
             >
-              Erase
+              🧽Eraser
             </button>
             <input
               type="color"
@@ -163,12 +170,15 @@ const Sketch2Paint = () => {
 
         {/* Output Area */}
         <div className="flex flex-col items-center space-y-4">
-          <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">🖼️ Generated Painting</h2>
+          <div className='flex items-center'>
+            <span className="text-xl">🖼️</span>
+            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text"> Generated Painting</h2>
+          </div>
           <div className="w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] border rounded bg-white shadow flex items-center justify-center overflow-hidden">
             {outputUrl ? (
               <img src={outputUrl} alt="Generated painting" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-gray-400">Painting will appear here</span>
+              <span className="text-gray-400">Generated painting will appear here</span>
             )}
           </div>
         </div>
