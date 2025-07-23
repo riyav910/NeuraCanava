@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/NeuraCanava/static/css/main.fd6ec09b.css",
+    "main.js": "/NeuraCanava/static/js/main.3ecc103d.js",
+    "index.html": "/NeuraCanava/index.html",
+    "main.fd6ec09b.css.map": "/NeuraCanava/static/css/main.fd6ec09b.css.map",
+    "main.3ecc103d.js.map": "/NeuraCanava/static/js/main.3ecc103d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fd6ec09b.css",
+    "static/js/main.3ecc103d.js"
+  ]
+}
