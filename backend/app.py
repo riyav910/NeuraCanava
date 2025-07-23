@@ -32,7 +32,8 @@ else:
 @app.route('/')
 def index():
     """Renders the main HTML page."""
-    return render_template('index.html')
+    # return render_template('index.html')
+    return "Backend API is running."
 
 @app.route('/generate', methods=['POST'])
 def generate_painting():
@@ -66,11 +67,7 @@ def generate_painting():
     except Exception as e:
         print(f"Error processing input image: {e}")
         return jsonify({"error": f"Error processing input image: {e}"}), 500
-  
-
-
     try:
-        
         # Configure input prompt.
         default_prompt = "Convert this input sketch into a beautiful, detailed painting. Maintain the core subject and composition of the sketch."
 
@@ -153,6 +150,8 @@ def generate_painting():
         return jsonify({"error": f"Failed to generate painting: {error_detail}"}), 500
 
 
+import os
+
 if __name__ == '__main__':
-    # Use debug=True for development only.
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)

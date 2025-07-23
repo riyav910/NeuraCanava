@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-// const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
-
-const Sketch2Paint = () => {
+const Neuracanavas = () => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
 
@@ -116,7 +114,7 @@ const Sketch2Paint = () => {
       <div className="flex items-center mb-4">
         <span className="text-5xl">🎨</span>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
-        Sketch to Paint
+        neuraCanavas
         </h1>
       </div>
       {/* Layout: Sketch & Output */}
@@ -209,4 +207,4 @@ const Sketch2Paint = () => {
   );
 };
 
-export default Sketch2Paint;
+export default Neuracanavas;
