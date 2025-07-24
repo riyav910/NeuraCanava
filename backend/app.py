@@ -12,7 +12,7 @@ load_dotenv('.env')
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://riyav910.github.io/NeuraCanava/"}})
 
 API_KEY = os.environ.get("REACT_APP_GEMINI_API_KEY")
 
