@@ -1,4 +1,4 @@
-# ─── Python Backend ───
+# ───Backend ───
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -7,7 +7,7 @@ venv/
 .env
 *.env
 
-# ─── Node.js Frontend ───
+# ───Frontend ───
 node_modules/
 build/
 npm-debug.log*
@@ -15,7 +15,7 @@ yarn-debug.log*
 yarn-error.log*
 .env.local
 .env.development
-.env.production
+.env.productio
 
 # ─── System ───
 .DS_Store

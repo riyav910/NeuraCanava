@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const Neuracanavas = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
 
@@ -83,7 +84,7 @@ const Neuracanavas = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate`, {
+      const res = await fetch(`${API_BASE_URL}/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +100,7 @@ const Neuracanavas = () => {
       if (res.ok && data.generated_image) {
         setOutputUrl(data.generated_image); // this could be a caption or base64
       } else {
-        setError(data.error || "Unexpected error.");
+        setError(data.error || "Server error");
       }
     } catch (err) {
       console.error("API error:", err);
