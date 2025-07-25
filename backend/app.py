@@ -12,7 +12,12 @@ load_dotenv('.env')
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "https://riyav910.github.io"}})
+allowed_origins = [
+    "http://localhost:3000",             
+    "https://riyav910.github.io",        
+]
+
+CORS(app, resources={r"/*": {"origins": allowed_origins}})
 
 API_KEY = os.environ.get("REACT_APP_GEMINI_API_KEY")
 
