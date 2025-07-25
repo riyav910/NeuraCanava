@@ -6,7 +6,7 @@
 
 ## 🚀 Features
 
-- 🖌️ Draw or upload a sketch in the browser
+- 🖌️ Draw a sketch in the browser
 - 🤖 Generate an AI-enhanced painting using Gemini
 - 🔄 See real-time side-by-side preview of sketch vs output
 - 🌐 Fully functional React frontend and Python backend
