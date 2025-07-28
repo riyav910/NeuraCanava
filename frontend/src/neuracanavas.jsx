@@ -15,8 +15,6 @@ const Neuracanavas = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    // canvas.width = 500;
-    // canvas.height = 500;
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     const ctx = canvas.getContext('2d');
@@ -54,6 +52,32 @@ const Neuracanavas = () => {
     ctxRef.current.closePath();
   };
 
+  // Touch helpers
+  const getTouchPos = (touchEvent) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const touch = touchEvent.touches[0];
+    return {
+      offsetX: touch.clientX - rect.left,
+      offsetY: touch.clientY - rect.top,
+    };
+  };
+
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    setIsDrawing(true);
+    const { offsetX, offsetY } = getTouchPos(e);
+    ctxRef.current.beginPath();
+    ctxRef.current.moveTo(offsetX, offsetY);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDrawing) return;
+    e.preventDefault();
+    const { offsetX, offsetY } = getTouchPos(e);
+    ctxRef.current.lineTo(offsetX, offsetY);
+    ctxRef.current.stroke();
+  };
+
   const setDrawMode = () => {
     setMode('draw');
     ctxRef.current.globalCompositeOperation = 'source-over';
@@ -74,12 +98,11 @@ const Neuracanavas = () => {
     setOutputUrl('');
   };
 
-
   const handleGenerate = async () => {
     const canvas = canvasRef.current;
     const imageDataUrl = canvas.toDataURL("image/png");
 
-    setOutputUrl("");       // clear any previous result
+    setOutputUrl("");
     setIsGenerating(true);
     setError(null);
 
@@ -98,7 +121,7 @@ const Neuracanavas = () => {
       const data = await res.json();
 
       if (res.ok && data.generated_image) {
-        setOutputUrl(data.generated_image); // this could be a caption or base64
+        setOutputUrl(data.generated_image);
       } else {
         setError(data.error || "Server error");
       }
@@ -115,20 +138,21 @@ const Neuracanavas = () => {
       <div className="flex items-center mb-4">
         <span className="text-5xl">🎨</span>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
-        neuraCanavas
+          neuraCanavas
         </h1>
       </div>
+
       {/* Layout: Sketch & Output */}
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-6xl justify-center">
         {/* Sketch Area */}
         <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center">
-            <span className="text-xl">🖌️</span>
+            <span className="text-xl">🖌</span>
             <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
               Your Sketch
             </h2>
           </div>
-          <div className="border shadow rounded bg-white">
+          <div className="border shadow rounded bg-white touch-none">
             <canvas
               ref={canvasRef}
               className="w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px]"
@@ -136,19 +160,22 @@ const Neuracanavas = () => {
               onMouseMove={draw}
               onMouseUp={stopDraw}
               onMouseLeave={stopDraw}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={stopDraw}
             />
           </div>
 
           <div className="flex flex-wrap gap-4 justify-center items-center">
             <button
               onClick={setDrawMode}
-              className={`px-5 py-2 rounded-2xl font-medium text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:brightness-110 shadow-md hover:shadow-lg transition-all duration-300`}
+              className="px-5 py-2 rounded-2xl font-medium text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:brightness-110 shadow-md hover:shadow-lg transition-all duration-300"
             >
-              ✏️Draw
+              ✏Draw
             </button>
             <button
               onClick={setEraseMode}
-              className={`px-5 py-2 rounded-2xl font-medium text-red-600 border border-red-300 hover:bg-red-50 hover:text-red-700 transition-all duration-300`}
+              className="px-5 py-2 rounded-2xl font-medium text-red-600 border border-red-300 hover:bg-red-50 hover:text-red-700 transition-all duration-300"
             >
               🧽Eraser
             </button>
@@ -169,13 +196,19 @@ const Neuracanavas = () => {
 
         {/* Output Area */}
         <div className="flex flex-col items-center space-y-4">
-          <div className='flex items-center'>
-            <span className="text-xl">🖼️</span>
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text"> Generated Painting</h2>
+          <div className="flex items-center">
+            <span className="text-xl">🖼</span>
+            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
+              Generated Painting
+            </h2>
           </div>
           <div className="w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] border rounded bg-white shadow flex items-center justify-center overflow-hidden">
             {outputUrl ? (
-              <img src={outputUrl} alt="Generated painting" className="w-full h-full object-cover" />
+              <img
+                src={outputUrl}
+                alt="Generated painting"
+                className="w-full h-full object-cover"
+              />
             ) : (
               <span className="text-gray-400">Generated painting will appear here</span>
             )}
@@ -203,7 +236,6 @@ const Neuracanavas = () => {
       </button>
       {isGenerating && <p className="text-blue-600 mt-2">Generating painting...</p>}
       {error && <p className="text-red-600 mt-2 font-medium">{error}</p>}
-
     </div>
   );
 };
