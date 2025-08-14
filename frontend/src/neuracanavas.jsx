@@ -134,10 +134,10 @@ const Neuracanavas = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen bg-gradient-to-br from-green-200 to-blue-200 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen bg-gradient-to-br from-custom1 p-4">
       <div className="flex items-center mb-4">
         <span className="text-5xl">🎨</span>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-blue-400 to-red-500 text-transparent bg-clip-text">
           neuraCanavas
         </h1>
       </div>
@@ -147,8 +147,8 @@ const Neuracanavas = () => {
         {/* Sketch Area */}
         <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center">
-            <span className="text-xl">🖌</span>
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
+            <span className="text-xl">🖌️</span>
+            <h2 className="text-xl font-bold bg-gradient-to-r from-teal-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
               Your Sketch
             </h2>
           </div>
@@ -171,7 +171,7 @@ const Neuracanavas = () => {
               onClick={setDrawMode}
               className="px-5 py-2 rounded-2xl font-medium text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:brightness-110 shadow-md hover:shadow-lg transition-all duration-300"
             >
-              ✏Draw
+              ✏️Draw
             </button>
             <button
               onClick={setEraseMode}
@@ -198,7 +198,7 @@ const Neuracanavas = () => {
         <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center">
             <span className="text-xl">🖼</span>
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-teal-500 via-sky-500 to-teal-400 text-transparent bg-clip-text">
               Generated Painting
             </h2>
           </div>
@@ -213,29 +213,36 @@ const Neuracanavas = () => {
               <span className="text-gray-400">Generated painting will appear here</span>
             )}
           </div>
+          <div className="flex flex-wrap justify-center items-center">
+            <button
+              onClick={handleGenerate}
+              disabled={isGenerating} // prevents spam clicks while generating
+              className={`px-4 py-2 text-white text-md rounded-lg shadow-md transition
+                ${isGenerating
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+                }`}
+            >
+              {isGenerating ? "Generating Painting..." : "Generate Painting"}
+            </button>
+
+            {error && <p className="text-red-600 mt-2 font-medium">{error}</p>}
+          </div>
+
         </div>
       </div>
 
       {/* Prompt and Generate */}
       <div className="w-full max-w-2xl mt-8 px-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Optional Prompt</label>
+        <label className="block text-sm font-medium text-gray-400 mb-1">Optional Prompt</label>
         <textarea
-          rows={2}
+          rows={1}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="e.g. watercolor, oil style, cartoon..."
           className="w-full p-3 border border-gray-300 rounded-lg shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
-
-      <button
-        onClick={handleGenerate}
-        className="mt-4 px-6 py-3 bg-green-500 text-white text-lg rounded-lg shadow-md hover:bg-green-600 transition"
-      >
-        Generate Painting
-      </button>
-      {isGenerating && <p className="text-blue-600 mt-2">Generating painting...</p>}
-      {error && <p className="text-red-600 mt-2 font-medium">{error}</p>}
     </div>
   );
 };
