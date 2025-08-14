@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/NeuraCanava/static/css/main.7089320d.css",
-    "main.js": "/NeuraCanava/static/js/main.4de1c1b5.js",
+    "main.css": "/NeuraCanava/static/css/main.92a4edca.css",
+    "main.js": "/NeuraCanava/static/js/main.b6f3b24f.js",
     "index.html": "/NeuraCanava/index.html",
-    "main.7089320d.css.map": "/NeuraCanava/static/css/main.7089320d.css.map",
-    "main.4de1c1b5.js.map": "/NeuraCanava/static/js/main.4de1c1b5.js.map"
+    "main.92a4edca.css.map": "/NeuraCanava/static/css/main.92a4edca.css.map",
+    "main.b6f3b24f.js.map": "/NeuraCanava/static/js/main.b6f3b24f.js.map"
   },
   "entrypoints": [
-    "static/css/main.7089320d.css",
-    "static/js/main.4de1c1b5.js"
+    "static/css/main.92a4edca.css",
+    "static/js/main.b6f3b24f.js"
   ]
 }
