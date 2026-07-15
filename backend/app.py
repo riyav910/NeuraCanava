@@ -21,7 +21,7 @@ CORS(app, resources={r"/*": {"origins": allowed_origins}})
 
 API_KEY = os.environ.get("REACT_APP_GEMINI_API_KEY")
 
-MODEL_ID = 'gemini-2.0-flash-exp-image-generation'
+MODEL_ID = 'gemini-3.1-flash-lite-image'
 
 if not API_KEY:
     print("Error: GOOGLE_API_KEY not found in environment variables.")
